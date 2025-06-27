@@ -56,6 +56,9 @@ theme: {
       spacing: {
         'touch': '44px',
         'safe': '16px',
+},
+      minWidth: {
+        'touch': '44px',
       },
       minHeight: {
         'touch': '44px',
