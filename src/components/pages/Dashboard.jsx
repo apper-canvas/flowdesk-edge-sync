@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import StatCard from '@/components/molecules/StatCard'
 import ActivityItem from '@/components/molecules/ActivityItem'
 import DashboardGrid from '@/components/molecules/DashboardGrid'
@@ -16,6 +17,7 @@ import { dashboardService } from '@/services/api/dashboardService'
 import { toast } from 'react-toastify'
 const Dashboard = () => {
   const navigate = useNavigate()
+  const { user, isAuthenticated } = useSelector((state) => state.user)
   const [contacts, setContacts] = useState([])
   const [deals, setDeals] = useState([])
   const [activities, setActivities] = useState([])
@@ -25,6 +27,14 @@ const Dashboard = () => {
   const [viewMode, setViewMode] = useState('default') // 'default' or 'custom'
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login')
+      return
+    }
+  }, [isAuthenticated, navigate])
 const loadDashboardData = async () => {
     try {
       setLoading(true)
@@ -44,8 +54,8 @@ const loadDashboardData = async () => {
       setSavedDashboards(dashboardsData)
       setAvailableWidgets(widgetsData)
       
-      // Set default dashboard
-      const defaultDash = dashboardsData.find(d => d.isDefault)
+// Set default dashboard
+      const defaultDash = dashboardsData.find(d => d.is_default)
       if (defaultDash) {
         setCurrentDashboard(defaultDash)
       }

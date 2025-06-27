@@ -50,10 +50,10 @@ const Activities = () => {
 
     // Filter by search query
     if (searchQuery.trim() !== '') {
-      filtered = filtered.filter(activity =>
+filtered = filtered.filter(activity =>
         activity.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (activity.contactName && activity.contactName.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (activity.dealTitle && activity.dealTitle.toLowerCase().includes(searchQuery.toLowerCase()))
+        (activity.contact_name && activity.contact_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (activity.deal_title && activity.deal_title.toLowerCase().includes(searchQuery.toLowerCase()))
       )
     }
 

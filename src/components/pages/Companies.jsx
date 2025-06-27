@@ -50,9 +50,9 @@ const Companies = () => {
     if (searchQuery.trim() === '') {
       setFilteredCompanies(companies)
     } else {
-      const filtered = companies.filter(company =>
-        company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        company.industry.toLowerCase().includes(searchQuery.toLowerCase())
+const filtered = companies.filter(company =>
+        company.Name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        company.industry?.toLowerCase().includes(searchQuery.toLowerCase())
       )
       setFilteredCompanies(filtered)
     }
@@ -78,7 +78,7 @@ const getCompanyContacts = (companyId) => {
       }
       
       // Create company
-      const newCompany = await companyService.create({
+const newCompany = await companyService.create({
         name: formData.name.trim(),
         industry: formData.industry.trim(),
         size: formData.size || 'Small',
@@ -144,8 +144,8 @@ const getCompanyContacts = (companyId) => {
                       <ApperIcon name="Building" className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-display font-semibold text-gray-900 text-lg">
-                        {company.name}
+<h3 className="font-display font-semibold text-gray-900 text-lg">
+                        {company.Name}
                       </h3>
                       <p className="text-sm text-gray-600">{company.industry}</p>
                     </div>

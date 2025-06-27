@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '@/components/organisms/Sidebar'
 import Header from '@/components/organisms/Header'
-
+import { AuthContext } from '../../App'
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const authContext = useContext(AuthContext)
 
   const handleSearch = (query) => {
     console.log('Search query:', query)
     // Implement global search functionality
   }
-
 return (
     <div className="min-h-screen bg-surface">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />

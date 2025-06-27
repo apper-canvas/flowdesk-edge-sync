@@ -1,9 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import ApperIcon from '@/components/ApperIcon'
 import SearchBar from '@/components/molecules/SearchBar'
 import Button from '@/components/atoms/Button'
-
+import { AuthContext } from '../../App'
 const Header = ({ onMenuClick, onSearch }) => {
+  const { logout } = useContext(AuthContext)
+  const { user } = useSelector((state) => state.user)
+  
+  const handleLogout = async () => {
+    try {
+      await logout()
+    } catch (error) {
+      console.error("Logout error:", error)
+    }
+  }
+
+  const getUserInitials = () => {
+    if (user?.firstName && user?.lastName) {
+      return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`
+    }
+    if (user?.emailAddress) {
+      return user.emailAddress.charAt(0).toUpperCase()
+    }
+    return 'U'
+  }
+
   return (
     <header className="bg-white border-b border-gray-200 px-safe sm:px-4 lg:px-8 py-3 sm:py-4">
       <div className="flex items-center justify-between">
@@ -39,8 +61,16 @@ const Header = ({ onMenuClick, onSearch }) => {
             className="touch-target"
           />
           
+          <Button
+            variant="ghost"
+            icon="LogOut"
+            className="touch-target"
+            onClick={handleLogout}
+            title="Logout"
+          />
+          
           <div className="w-10 h-10 sm:w-8 sm:h-8 bg-gradient-to-br from-primary-400 to-secondary-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-sm font-semibold">JD</span>
+            <span className="text-white text-sm font-semibold">{getUserInitials()}</span>
           </div>
         </div>
       </div>

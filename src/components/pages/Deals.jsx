@@ -38,11 +38,11 @@ const Deals = () => {
       ])
       
       // Enrich deals with contact information
-      const enrichedDeals = dealsData.map(deal => {
-        const contact = contactsData.find(c => c.Id === deal.contactId)
+const enrichedDeals = dealsData.map(deal => {
+        const contact = contactsData.find(c => c.Id === deal.contact_id?.Id)
         return {
           ...deal,
-          contactName: contact ? `${contact.firstName} ${contact.lastName}` : 'Unknown Contact'
+          contactName: contact ? `${contact.first_name} ${contact.last_name}` : deal.contact_id?.Name || 'Unknown Contact'
         }
       })
       
@@ -73,22 +73,22 @@ const Deals = () => {
   const handleSaveDeal = async (dealData) => {
     try {
       if (selectedDeal) {
-        await dealService.update(selectedDeal.Id, dealData)
-        const contact = contacts.find(c => c.Id === dealData.contactId)
+await dealService.update(selectedDeal.Id, dealData)
+        const contact = contacts.find(c => c.Id === dealData.contact_id)
         const updatedDeal = {
           ...selectedDeal,
           ...dealData,
-          contactName: contact ? `${contact.firstName} ${contact.lastName}` : 'Unknown Contact'
+          contactName: contact ? `${contact.first_name} ${contact.last_name}` : 'Unknown Contact'
         }
         setDeals(prev => prev.map(d => 
           d.Id === selectedDeal.Id ? updatedDeal : d
         ))
       } else {
-        const newDeal = await dealService.create(dealData)
-        const contact = contacts.find(c => c.Id === dealData.contactId)
+const newDeal = await dealService.create(dealData)
+        const contact = contacts.find(c => c.Id === dealData.contact_id)
         const enrichedDeal = {
           ...newDeal,
-          contactName: contact ? `${contact.firstName} ${contact.lastName}` : 'Unknown Contact'
+          contactName: contact ? `${contact.first_name} ${contact.last_name}` : 'Unknown Contact'
         }
         setDeals(prev => [...prev, enrichedDeal])
       }
