@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import ApperIcon from '@/components/ApperIcon'
 import Button from '@/components/atoms/Button'
+import Input from '@/components/atoms/Input'
+import Select from '@/components/atoms/Select'
 import SearchBar from '@/components/molecules/SearchBar'
 import Badge from '@/components/atoms/Badge'
 import Loading from '@/components/ui/Loading'
 import Error from '@/components/ui/Error'
 import Empty from '@/components/ui/Empty'
+import Modal from '@/components/organisms/Modal'
 import { companyService } from '@/services/api/companyService'
 import { contactService } from '@/services/api/contactService'
-
+import { toast } from 'react-toastify'
 const Companies = () => {
   const [companies, setCompanies] = useState([])
   const [filteredCompanies, setFilteredCompanies] = useState([])
@@ -16,7 +19,8 @@ const Companies = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const loadData = async () => {
     try {
       setLoading(true)
@@ -54,10 +58,48 @@ const Companies = () => {
     }
   }, [searchQuery, companies])
 
-  const getCompanyContacts = (companyId) => {
+const getCompanyContacts = (companyId) => {
     return contacts.filter(contact => contact.companyId === companyId)
   }
 
+  const handleAddCompany = async (formData) => {
+    try {
+      setIsSubmitting(true)
+      
+      // Validate required fields
+      if (!formData.name.trim()) {
+        toast.error('Company name is required')
+        return
+      }
+      
+      if (!formData.industry.trim()) {
+        toast.error('Industry is required')
+        return
+      }
+      
+      // Create company
+      const newCompany = await companyService.create({
+        name: formData.name.trim(),
+        industry: formData.industry.trim(),
+        size: formData.size || 'Small',
+        website: formData.website.trim() || null
+      })
+      
+      // Update local state
+      setCompanies(prev => [...prev, newCompany])
+      setFilteredCompanies(prev => [...prev, newCompany])
+      
+      // Close modal and show success
+      setIsModalOpen(false)
+      toast.success('Company added successfully!')
+      
+    } catch (err) {
+      console.error('Error creating company:', err)
+      toast.error('Failed to create company. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   if (loading) {
     return <Loading />
   }
@@ -73,8 +115,9 @@ const Companies = () => {
           <h1 className="text-3xl font-display font-bold gradient-text">Companies</h1>
           <p className="text-gray-600 mt-1">Manage your business relationships</p>
         </div>
-        <Button
+<Button
           icon="Plus"
+          onClick={() => setIsModalOpen(true)}
         >
           Add Company
         </Button>
@@ -165,14 +208,168 @@ const Companies = () => {
           })}
         </div>
       ) : (
-        <Empty
+<Empty
           title={searchQuery ? "No companies found" : "No companies yet"}
           description={searchQuery ? "Try adjusting your search terms." : "Start tracking your business relationships by adding companies."}
           actionLabel="Add Company"
+          onAction={() => setIsModalOpen(true)}
           icon="Building"
         />
       )}
+
+      <AddCompanyModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddCompany}
+        isSubmitting={isSubmitting}
+      />
     </div>
+  )
+}
+
+const AddCompanyModal = ({ isOpen, onClose, onSubmit, isSubmitting }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    industry: '',
+    size: 'Small',
+    website: ''
+  })
+  const [errors, setErrors] = useState({})
+
+  const sizeOptions = [
+    { value: 'Small', label: 'Small (1-50 employees)' },
+    { value: 'Medium', label: 'Medium (51-500 employees)' },
+    { value: 'Large', label: 'Large (500+ employees)' }
+  ]
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Company name is required'
+    }
+    
+    if (!formData.industry.trim()) {
+      newErrors.industry = 'Industry is required'
+    }
+    
+    if (formData.website && !formData.website.match(/^https?:\/\/.*\..*/)) {
+      newErrors.website = 'Please enter a valid website URL'
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+    
+    await onSubmit(formData)
+  }
+
+  const handleClose = () => {
+    setFormData({
+      name: '',
+      industry: '',
+      size: 'Small',
+      website: ''
+    })
+    setErrors({})
+    onClose()
+  }
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title="Add New Company"
+      size="md"
+    >
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Company Name *
+          </label>
+          <Input
+            type="text"
+            value={formData.name}
+            onChange={(e) => handleInputChange('name', e.target.value)}
+            placeholder="Enter company name"
+            error={errors.name}
+            disabled={isSubmitting}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Industry *
+          </label>
+          <Input
+            type="text"
+            value={formData.industry}
+            onChange={(e) => handleInputChange('industry', e.target.value)}
+            placeholder="e.g., Technology, Healthcare, Finance"
+            error={errors.industry}
+            disabled={isSubmitting}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Company Size
+          </label>
+          <Select
+            value={formData.size}
+            onChange={(value) => handleInputChange('size', value)}
+            options={sizeOptions}
+            disabled={isSubmitting}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Website
+          </label>
+          <Input
+            type="url"
+            value={formData.website}
+            onChange={(e) => handleInputChange('website', e.target.value)}
+            placeholder="https://example.com"
+            error={errors.website}
+            disabled={isSubmitting}
+          />
+        </div>
+
+        <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={handleClose}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            loading={isSubmitting}
+            icon="Plus"
+          >
+            Add Company
+          </Button>
+        </div>
+      </form>
+    </Modal>
   )
 }
 
