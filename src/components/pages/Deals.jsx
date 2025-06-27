@@ -116,44 +116,45 @@ const Deals = () => {
     return <Error message={error} onRetry={loadData} />
   }
 
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+return (
+    <div className="space-y-4 sm:space-y-6">
+      <div className="mobile-header">
         <div>
-          <h1 className="text-3xl font-display font-bold gradient-text">Deals</h1>
-          <p className="text-gray-600 mt-1">Track your sales pipeline</p>
+          <h1 className="text-2xl sm:text-3xl font-display font-bold gradient-text">Deals</h1>
+          <p className="text-gray-600 mt-1 text-sm sm:text-base">Track your sales pipeline</p>
         </div>
         <Button
           onClick={handleAddDeal}
           icon="Plus"
+          className="w-full sm:w-auto"
         >
           Add Deal
         </Button>
       </div>
 
       {deals.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 overflow-x-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6 overflow-x-auto pb-4">
           {stages.map((stage) => {
             const stageDeals = getDealsByStage(stage.id)
             const stageValue = calculateStageValue(stage.id)
             
             return (
-              <div key={stage.id} className="min-w-80 flex-shrink-0">
-                <div className={`rounded-lg p-4 mb-4 ${stage.color}`}>
+              <div key={stage.id} className="min-w-72 sm:min-w-80 flex-shrink-0">
+                <div className={`rounded-lg p-3 sm:p-4 mb-3 sm:mb-4 ${stage.color}`}>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display font-semibold text-gray-900">
+                    <h3 className="font-display font-semibold text-gray-900 text-sm sm:text-base">
                       {stage.name}
                     </h3>
-                    <span className="text-sm text-gray-600">
+                    <span className="text-xs sm:text-sm text-gray-600">
                       {stageDeals.length}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
                     ${stageValue.toLocaleString()}
                   </p>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {stageDeals.map((deal) => (
                     <DealCard
                       key={deal.Id}

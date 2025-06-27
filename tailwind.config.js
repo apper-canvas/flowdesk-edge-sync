@@ -4,7 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
+theme: {
     extend: {
       colors: {
         primary: {
@@ -53,10 +53,18 @@ export default {
         'display': ['Plus Jakarta Sans', 'sans-serif'],
         'body': ['Inter', 'sans-serif'],
       },
+      spacing: {
+        'touch': '44px',
+        'safe': '16px',
+      },
+      minHeight: {
+        'touch': '44px',
+      },
       boxShadow: {
         'soft': '0 2px 4px rgba(0, 0, 0, 0.05)',
         'medium': '0 4px 6px rgba(0, 0, 0, 0.1)',
         'strong': '0 10px 25px rgba(0, 0, 0, 0.15)',
+        'mobile': '0 1px 3px rgba(0, 0, 0, 0.1)',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',

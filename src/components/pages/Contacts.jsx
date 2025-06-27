@@ -97,16 +97,17 @@ const Contacts = () => {
     return <Error message={error} onRetry={loadContacts} />
   }
 
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+return (
+    <div className="space-y-4 sm:space-y-6">
+      <div className="mobile-header">
         <div>
-          <h1 className="text-3xl font-display font-bold gradient-text">Contacts</h1>
-          <p className="text-gray-600 mt-1">Manage your customer relationships</p>
+          <h1 className="text-2xl sm:text-3xl font-display font-bold gradient-text">Contacts</h1>
+          <p className="text-gray-600 mt-1 text-sm sm:text-base">Manage your customer relationships</p>
         </div>
         <Button
           onClick={handleAddContact}
           icon="Plus"
+          className="w-full sm:w-auto"
         >
           Add Contact
         </Button>
@@ -116,12 +117,12 @@ const Contacts = () => {
         <SearchBar
           onSearch={setSearchQuery}
           placeholder="Search contacts..."
-          className="flex-1 max-w-md"
+          className="flex-1 max-w-full sm:max-w-md"
         />
       </div>
 
       {filteredContacts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mobile-grid">
           {filteredContacts.map((contact) => (
             <ContactCard
               key={contact.Id}
@@ -141,7 +142,6 @@ const Contacts = () => {
           icon="Users"
         />
       )}
-
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

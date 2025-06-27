@@ -5,12 +5,12 @@ import Button from '@/components/atoms/Button'
 
 const Header = ({ onMenuClick, onSearch }) => {
   return (
-    <header className="bg-white border-b border-gray-200 px-4 lg:px-8 py-4">
+    <header className="bg-white border-b border-gray-200 px-safe sm:px-4 lg:px-8 py-3 sm:py-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 sm:space-x-4">
           <button
             onClick={onMenuClick}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="lg:hidden touch-target rounded-lg hover:bg-gray-100 transition-colors"
           >
             <ApperIcon name="Menu" className="w-5 h-5" />
           </button>
@@ -19,16 +19,16 @@ const Header = ({ onMenuClick, onSearch }) => {
             <SearchBar
               onSearch={onSearch}
               placeholder="Search contacts, companies, deals..."
-              className="w-96"
+              className="w-64 lg:w-96"
             />
           </div>
         </div>
         
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-1 sm:space-x-3">
           <Button
             variant="ghost"
             icon="Bell"
-            className="relative"
+            className="relative touch-target"
           >
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-accent-500 rounded-full"></span>
           </Button>
@@ -36,9 +36,10 @@ const Header = ({ onMenuClick, onSearch }) => {
           <Button
             variant="ghost"
             icon="Settings"
+            className="touch-target"
           />
           
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-400 to-secondary-500 rounded-full flex items-center justify-center">
+          <div className="w-10 h-10 sm:w-8 sm:h-8 bg-gradient-to-br from-primary-400 to-secondary-500 rounded-full flex items-center justify-center">
             <span className="text-white text-sm font-semibold">JD</span>
           </div>
         </div>

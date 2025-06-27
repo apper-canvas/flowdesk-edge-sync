@@ -11,7 +11,7 @@ const Layout = () => {
     // Implement global search functionality
   }
 
-  return (
+return (
     <div className="min-h-screen bg-surface">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
@@ -21,7 +21,7 @@ const Layout = () => {
           onSearch={handleSearch}
         />
         
-        <main className="p-4 lg:p-8">
+        <main className="p-safe sm:p-4 lg:p-8">
           <Outlet />
         </main>
       </div>
