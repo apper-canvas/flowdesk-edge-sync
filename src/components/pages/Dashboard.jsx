@@ -193,6 +193,124 @@ return (
               change="+15%"
               changeType="positive"
             />
+</div>
+
+          {/* Features Showcase Section */}
+          <div className="card-premium p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-display font-bold gradient-text mb-2">
+                Powerful CRM Features at Your Fingertips
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Discover how FlowDesk CRM streamlines your sales process with intuitive tools designed for modern businesses.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Contact Management Feature */}
+              <div className="text-center space-y-4">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 mb-4">
+                  <div className="bg-white rounded-lg shadow-lg p-4 max-w-xs mx-auto">
+                    <div className="flex items-center space-x-3 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
+                        <ApperIcon name="User" size={20} className="text-white" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold text-gray-900 text-sm">Sarah Johnson</div>
+                        <div className="text-xs text-gray-600">Enterprise Client</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-gray-500">Last Contact:</span>
+                      <span className="text-green-600 font-medium">2 days ago</span>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-display font-semibold text-gray-900">
+                  Contact Management
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Organize and track all your customer interactions in one place. Keep detailed contact profiles with communication history, preferences, and important notes.
+                </p>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => navigate('/contacts')}
+                  className="flex items-center space-x-2 mx-auto"
+                >
+                  <span>Learn More</span>
+                  <ApperIcon name="ArrowRight" size={14} />
+                </Button>
+              </div>
+
+              {/* Deal Tracking Feature */}
+              <div className="text-center space-y-4">
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 mb-4">
+                  <div className="bg-white rounded-lg shadow-lg p-4 max-w-xs mx-auto">
+                    <div className="text-left mb-3">
+                      <div className="font-semibold text-gray-900 text-sm">Website Redesign</div>
+                      <div className="text-xs text-gray-600 mb-2">$25,000 • Proposal Stage</div>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                      <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style={{ width: '65%' }} />
+                    </div>
+                    <div className="text-xs text-gray-600 text-right">65% Complete</div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-display font-semibold text-gray-900">
+                  Deal Tracking
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Monitor your sales pipeline with visual deal tracking. See deal progress, values, and probabilities at a glance to focus on what matters most.
+                </p>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => navigate('/deals')}
+                  className="flex items-center space-x-2 mx-auto"
+                >
+                  <span>Learn More</span>
+                  <ApperIcon name="ArrowRight" size={14} />
+                </Button>
+              </div>
+
+              {/* Activity Logging Feature */}
+              <div className="text-center space-y-4">
+                <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-lg p-6 mb-4">
+                  <div className="bg-white rounded-lg shadow-lg p-4 max-w-xs mx-auto">
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <div className="text-xs text-gray-600">Called John Smith</div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <div className="text-xs text-gray-600">Email sent to ABC Corp</div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        <div className="text-xs text-gray-600">Meeting scheduled</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-display font-semibold text-gray-900">
+                  Activity Logging
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Never miss a follow-up with comprehensive activity tracking. Log calls, emails, meetings, and tasks to maintain perfect communication records.
+                </p>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => navigate('/activities')}
+                  className="flex items-center space-x-2 mx-auto"
+                >
+                  <span>Learn More</span>
+                  <ApperIcon name="ArrowRight" size={14} />
+                </Button>
+              </div>
+            </div>
           </div>
 
           {/* Default Main Content */}
