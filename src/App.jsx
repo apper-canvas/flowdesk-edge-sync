@@ -3,17 +3,18 @@ import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Layout from '@/components/organisms/Layout'
 import Dashboard from '@/components/pages/Dashboard'
+import CustomDashboard from '@/components/pages/CustomDashboard'
 import Contacts from '@/components/pages/Contacts'
 import Companies from '@/components/pages/Companies'
 import Deals from '@/components/pages/Deals'
 import Activities from '@/components/pages/Activities'
-
 function App() {
   return (
     <>
-      <Routes>
+<Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="/dashboard/builder" element={<CustomDashboard />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/companies" element={<Companies />} />
           <Route path="/deals" element={<Deals />} />
